@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Dashboard</title>
+            </f:facet>
+        </h:head>
+        <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;key=AIzaSyCv3robKCP1HwbUoMD16FJTcwmgVktV5fE"></script>
+        <script src="js/maphandle.js" />
+        <script src="js/messagehandle.js" />
+        <h:body>
+            <ui:composition template="/template/template.xhtml">
+                <ui:define name="content">
+
+                    <p:gmap center="40.212440718286466, -100.283203125" zoom="5" type="map" style="width:100%;height:800px;" id="gmapid" widgetVar="tmap" />
+                    <p:inputTextarea id="logid" disabled="true" styleClass="logger"/>
+                    <p:commandButton value="Start" ajax="true"  actionListener="#{messageSender.send()}"/>
+
+
+                </ui:define>
+            </ui:composition>
+        </h:body>
+
+    </f:view>
+</html>
+
