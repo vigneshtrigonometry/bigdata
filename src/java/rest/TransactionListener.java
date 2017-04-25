@@ -26,8 +26,6 @@ import websocket.SocketListener;
 @Path("/transactions")
 public class TransactionListener {
 
-    @EJB
-    private TransactionController ctrlr;
     @Inject
     private SocketListener listener;
 
@@ -48,7 +46,6 @@ public class TransactionListener {
             transaction.setState(body.state);
             transaction.setTransactionAmt(Float.parseFloat(body.tx_val));
             transaction.setZipCode(Integer.parseInt(body.zip));
-            ctrlr.create(transaction);
             JsonObject obj = Json.createObjectBuilder()
                     .add("latitude", body.lat)
                     .add("longitude", body.lon)
