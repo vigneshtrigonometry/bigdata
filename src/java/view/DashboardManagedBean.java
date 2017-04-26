@@ -34,7 +34,7 @@ public class DashboardManagedBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        transactionList = txCtrl.getAllTransactions();
+        transactionList = null;
     }
 
     public List<Transaction> getTransactionList() {
