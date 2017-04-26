@@ -6,12 +6,13 @@
 package controller;
 
 import entity.Transaction;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Resource;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.sql.DataSource;
 
 /**
  *
@@ -20,57 +21,27 @@ import javax.sql.DataSource;
 @Stateless
 public class TransactionController {
 
-    @PersistenceContext(unitName = "MyApplicationPU")
-    EntityManager em;
-
-    public void create(Transaction tx) {
-        em.persist(tx);
-    }
-
     public List<Transaction> getAllTransactionsForCity(String city) {
-        List<Transaction> result = em.createNamedQuery(Transaction.FINDBYCITY, Transaction.class).setFirstResult(20).getResultList();
-        return result;
-    }
+        HiveController controller;
+        List<Transaction> transactions = new ArrayList<>();
+        try {
+            controller = new HiveController();
+            ResultSet result = controller.getTransactionsForCity(city);
+            while (result.next()) {
+                Transaction t = new Transaction();
+                t.setDeviceId(result.getInt("deviceid"));
+                t.setId(result.getLong("txid"));
+                t.setTransactionAmt(result.getFloat("txvalue"));
+                t.setAccountNo(result.getLong("accountid"));
+                t.setIsFraud(result.getBoolean("fraud"));
+                transactions.add(t);
+            }
+            return transactions;
+        } catch (SQLException ex) {
+            Logger.getLogger(TransactionController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
 
-    public List<Transaction> getAllSuccessfulTransactionsForCity(String city) {
-        return em.createNamedQuery(Transaction.FINDBYNONFRAUD_BYCITY, Transaction.class).setFirstResult(20).getResultList();
-    }
-
-    public List<Transaction> getAllFraudTransactionsForCity(String city) {
-        return em.createNamedQuery(Transaction.FINDBYFRAUD_BYCITY, Transaction.class).setFirstResult(20).getResultList();
-    }
-
-    public List<Transaction> getAllTransactionsForState(String state) {
-        List<Transaction> result = em.createNamedQuery(Transaction.FINDBYSTATE, Transaction.class).setFirstResult(20).getResultList();
-        return result;
-    }
-
-    public List<Transaction> getAllSuccessfulTransactionsForState(String state) {
-        return em.createNamedQuery(Transaction.FINDBYNONFRAUD_BYSTATE, Transaction.class).setFirstResult(20).getResultList();
-    }
-
-    public List<Transaction> getAllFraudTransactionsForState(String state) {
-        return em.createNamedQuery(Transaction.FINDBYFRAUD_BYSTATE, Transaction.class).setFirstResult(20).getResultList();
-    }
-
-    public List<String> getAllCities() {
-        return em.createNamedQuery(Transaction.DISTINCT_CITY, String.class).setFirstResult(20).getResultList();
-    }
-
-    public List<String> getAllStates() {
-        return em.createNamedQuery(Transaction.DISTINCT_STATE, String.class).setFirstResult(20).getResultList();
-    }
-
-    public List<Transaction> getAllSuccessfulTransactions() {
-        return em.createNamedQuery(Transaction.FINDALLSUCCESS, Transaction.class).setFirstResult(20).getResultList();
-    }
-
-    public List<Transaction> getAllFraudTransactions() {
-        return em.createNamedQuery(Transaction.FINDALLFRAUD, Transaction.class).setFirstResult(20).getResultList();
-    }
-
-    public List<Transaction> getAllTransactions() {
-        return em.createNamedQuery(Transaction.FINDALL, Transaction.class).setFirstResult(20).getResultList();
     }
 
 }
