@@ -27,6 +27,15 @@ public class DashboardManagedBean implements Serializable {
     @EJB
     private TransactionController txCtrl;
     private List<Transaction> transactionList;
+    private String location;
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
     
     public DashboardManagedBean(){
         transactionList = new ArrayList<Transaction>();
@@ -35,6 +44,10 @@ public class DashboardManagedBean implements Serializable {
     @PostConstruct
     public void init() {
         transactionList = null;
+    }
+    
+    public void populateTransactionList(){
+        transactionList = txCtrl.getAllTransactionsForCity(location);
     }
 
     public List<Transaction> getTransactionList() {

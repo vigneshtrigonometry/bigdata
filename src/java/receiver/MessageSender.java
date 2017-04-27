@@ -27,12 +27,6 @@ public class MessageSender implements Serializable {
 
     private String message;
 
-    @Resource(mappedName = "jms/connecFactory")
-    private ConnectionFactory connectionFactory;
-
-    @Resource(mappedName = "jms/destinationQueue")
-    private Queue destinationQueue;
-
     @EJB
     private TransactionController ctrl;
 

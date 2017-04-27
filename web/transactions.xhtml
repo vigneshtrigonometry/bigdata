@@ -17,8 +17,44 @@
         <h:body>
             <ui:composition template="/template/template.xhtml">
                 <ui:define name="content">
+                    <h:form id="locationForm">
+                        <p:inputText value="#{dashboardManagedBean.location}"></p:inputText>
+                        <h:commandButton value="Find" action="#{dashboardManagedBean.populateTransactionList()}">
+                            <f:ajax execute="@form" render="@form"/>
+                        </h:commandButton>
+                        
+                        <h:dataTable var="i" value="#{dashboardManagedBean.transactionList}">
 
-                    HERE WILL BE THE TABLE
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="id"/>
+                                </f:facet>
+                                <h:outputText value="#{i.id}"/>
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Device Id"/>
+                                </f:facet>
+                                <h:outputText value="#{i.deviceId}"/>
+                            </h:column>
+                            
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Transaction Value"/>
+                                </f:facet>
+                                <h:outputText value="#{i.transactionAmt}"/>
+                            </h:column>
+                            
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Account No."/>
+                                </f:facet>
+                                <h:outputText value="#{i.accountNo}"/>
+                            </h:column>
+                                                        
+                        </h:dataTable>
+                    </h:form>
 
 
 
