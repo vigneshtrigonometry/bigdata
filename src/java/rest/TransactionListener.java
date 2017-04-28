@@ -34,18 +34,9 @@ public class TransactionListener {
     public void receiveTransaction(RequestBody body) {
         try {
             Transaction transaction = new Transaction();
-            transaction.setId(Long.parseLong(body.txid));
-            transaction.setAccountNo(Long.parseLong(body.account_id));
-            transaction.setCity(body.city);
-            transaction.setCounty(body.county);
-            transaction.setDeviceId(Integer.parseInt(body.device_id));
             transaction.setIsFraud(Integer.parseInt(body.fraud) == 1 ? Boolean.TRUE : Boolean.FALSE);
             transaction.setLatitude(Float.parseFloat(body.lat));
             transaction.setLongitude(Float.parseFloat(body.lon));
-            transaction.setMerchantName(body.merchant_name);
-            transaction.setState(body.state);
-            transaction.setTransactionAmt(Float.parseFloat(body.tx_val));
-            transaction.setZipCode(Integer.parseInt(body.zip));
             JsonObject obj = Json.createObjectBuilder()
                     .add("latitude", body.lat)
                     .add("longitude", body.lon)
