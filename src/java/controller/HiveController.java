@@ -12,11 +12,14 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
+import javax.ejb.Stateless;
 
 /**
  *
  * @author Vignesh
  */
+@Stateless
 public class HiveController {
 
     private static final String driverName = "org.apache.hive.jdbc.HiveDriver";
@@ -47,15 +50,18 @@ public class HiveController {
         }
     }
 
-    public ResultSet getTransactionsForCity(String city) {
-        String sql = ("select t.* from transactions t, devices d where d.location like '%" + city + "%'");
+    public ResultSet getTransactionsForCity(String city) throws SQLException {
+        System.out.println("###################Starting####################");
+        String sql = ("select t.* from transactions t join devices d on t.deviceid = d.deviceid where d.location like '%" + city + "%' limit 100");
         try {
             res = stmt.executeQuery(sql);
+            System.out.println("###################Ending####################");
             return res;
         } catch (SQLException ex) {
             Logger.getLogger(HiveController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+
     }
 
 //    public void describeTable() throws SQLException {

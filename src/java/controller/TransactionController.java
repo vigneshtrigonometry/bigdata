@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 /**
@@ -21,8 +22,10 @@ import javax.ejb.Stateless;
 @Stateless
 public class TransactionController {
 
+    @EJB
+    private HiveController controller;
+
     public List<Transaction> getAllTransactionsForCity(String city) {
-        HiveController controller;
         List<Transaction> transactions = new ArrayList<>();
         try {
             controller = new HiveController();

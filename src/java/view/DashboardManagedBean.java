@@ -10,6 +10,7 @@ import entity.Transaction;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.event.ActionEvent;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;

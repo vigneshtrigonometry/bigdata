@@ -45,7 +45,7 @@ $(function () {
                 marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
                 break;
         }
-        marker.setAnimation(google.maps.Animation.BOUNCE);
-        setTimeout(function(){ marker.setMap(null); }, 1000);
+        //marker.setAnimation(google.maps.Animation.BOUNCE);
+        //setTimeout(function(){ marker.setMap(null); }, 1000);
     }
 })

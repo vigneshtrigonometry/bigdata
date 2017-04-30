@@ -17,43 +17,44 @@
         <h:body>
             <ui:composition template="/template/template.xhtml">
                 <ui:define name="content">
-                    <h:form id="locationForm">
-                        <p:inputText value="#{dashboardManagedBean.location}"></p:inputText>
-                        <h:commandButton value="Find" action="#{dashboardManagedBean.populateTransactionList()}">
-                            <f:ajax execute="@form" render="@form"/>
-                        </h:commandButton>
-                        
-                        <h:dataTable var="i" value="#{dashboardManagedBean.transactionList}">
+                    <h:form id="locationForm" prependId="false">
+                        <p:growl id="growl" life="2000" />
+                        <p:inputText value="#{dashboardManagedBean.location}" />
+                        <p:commandButton value="Find" actionListener="#{dashboardManagedBean.populateTransactionList}" ajax="true" process="@form" update="@form">
+                            <p:ajax process="@form" update="@form" />
+                        </p:commandButton>
 
-                            <h:column>
+                        <p:dataTable var="i" value="#{dashboardManagedBean.transactionList}" id="ttable">
+
+                            <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="id"/>
                                 </f:facet>
-                                <h:outputText value="#{i.id}"/>
-                            </h:column>
+                                <p:outputLabel value="#{i.id}"/>
+                            </p:column>
 
-                            <h:column>
+                            <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="Device Id"/>
                                 </f:facet>
-                                <h:outputText value="#{i.deviceId}"/>
-                            </h:column>
-                            
-                            <h:column>
+                                <p:outputLabel value="#{i.deviceId}"/>
+                            </p:column>
+
+                            <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="Transaction Value"/>
                                 </f:facet>
-                                <h:outputText value="#{i.transactionAmt}"/>
-                            </h:column>
-                            
-                            <h:column>
+                                <p:outputLabel value="#{i.transactionAmt}"/>
+                            </p:column>
+
+                            <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="Account No."/>
                                 </f:facet>
-                                <h:outputText value="#{i.accountNo}"/>
-                            </h:column>
-                                                        
-                        </h:dataTable>
+                                <p:outputLabel value="#{i.accountNo}"/>
+                            </p:column>
+
+                        </p:dataTable>
                     </h:form>
 
 
